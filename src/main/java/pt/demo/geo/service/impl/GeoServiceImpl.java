@@ -1,6 +1,5 @@
 package pt.demo.geo.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -9,8 +8,10 @@ import pt.demo.geo.dto.GeoCountry;
 import pt.demo.geo.dto.GeoResponse;
 import pt.demo.geo.service.GeoService;
 
-import java.util.Optional;
 
+/**
+ * GeoService implementation
+ */
 @Service
 public class GeoServiceImpl implements GeoService {
 
@@ -20,24 +21,41 @@ public class GeoServiceImpl implements GeoService {
     private String URL = "http://api.geonames.org/countryInfo?";
 
 
+    /**
+     * @param countryCode {@link String}
+     * @return {@link GeoCountry} when webService return results or null when result is empty
+     */
     @Override
     public GeoCountry getCountryInfoByCountryCode(String countryCode) {
 
         GeoCountry result;
+        GeoResponse response;
 
         StringBuilder stringBuilder = new StringBuilder(URL);
 
         stringBuilder.append("country=").append(countryCode).append("&username=jfvpereira");
 
-        GeoResponse response;
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        response = restTemplate.getForObject(stringBuilder.toString(), GeoResponse.class);
-
-        result = response.getGeoCountries().stream().findFirst().get();
+        try {
+            response = restTemplate.getForObject(stringBuilder.toString(), GeoResponse.class);
+            result = response.getGeoCountries().stream().findFirst().get();
+        } catch (Exception e) {
+            return null;
+        }
 
         return result;
     }
+
+/////******** No used code****////////////
+//        WebService.setUserName("jfvpereira");
+//
+//        ToponymSearchCriteria searchCriteria = new ToponymSearchCriteria();
+//        searchCriteria.getFeatureCodes();
+////        searchCriteria.setCountryCode(request.getCountryName());
+//        searchCriteria.setQ(request.getCountryName());
+//        ToponymSearchResult searchResult = WebService.search(searchCriteria);
+//        for (Toponym toponym : searchResult.getToponyms()) {
+//            System.out.println(toponym.getName()+" "+ toponym.getCountryName());
+//        }
 
     @Bean
     public RestTemplate restTemplate() {

@@ -9,8 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GeoCountry {
 
-    @XmlElement
-    private String countryCode;
+//    @XmlElement
+//    private String countryCode;
 
     @XmlElement
     private String countryName;
@@ -62,14 +62,6 @@ public class GeoCountry {
 
     @XmlElement
     private String postalCodeFormat;
-
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
 
     public String getCountryName() {
         return countryName;
