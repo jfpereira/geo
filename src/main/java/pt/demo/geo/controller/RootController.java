@@ -1,5 +1,7 @@
 package pt.demo.geo.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import javax.validation.Valid;
 @RestController
 public class RootController {
 
+    private static final Logger log = LoggerFactory.getLogger(RootController.class);
+
     @Autowired
     private GeoService geoService;
 
@@ -32,12 +36,15 @@ public class RootController {
     @PostMapping("/info")
     public ResponseEntity<Object> getInfoCountry(@Valid @RequestBody GeoRequest request) {
 
+        log.info("Get country information - Begin");
         GeoCountry response = geoService.getCountryInfoByCountryCode(request.getCountryName());
 
         if(null == response) {
+            log.info("Get country information with error - End");
             CustomError error = new CustomError(400, "No data");
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
+        log.info("Get country information with success - End");
         return ResponseEntity.ok(response);
     }
 }

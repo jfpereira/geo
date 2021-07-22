@@ -1,5 +1,7 @@
 package pt.demo.geo.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import pt.demo.geo.service.GeoService;
  */
 @Service
 public class GeoServiceImpl implements GeoService {
+
+    private static final Logger log = LoggerFactory.getLogger(GeoService.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -39,9 +43,11 @@ public class GeoServiceImpl implements GeoService {
             response = restTemplate.getForObject(stringBuilder.toString(), GeoResponse.class);
             result = response.getGeoCountries().stream().findFirst().get();
         } catch (Exception e) {
+            log.error("Error -> " + e.getMessage());
             return null;
         }
 
+        log.info("Return data for countryCode {} with success!", countryCode);
         return result;
     }
 
