@@ -1,11 +1,10 @@
 package pt.demo.geo.dto;
 
-
-import com.sun.istack.internal.NotNull;
-
+/**
+ * GeoRequest
+ */
 public class GeoRequest {
 
-    @NotNull
     private String countryName;
 
     public String getCountryName() {
