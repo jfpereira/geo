@@ -1,5 +1,6 @@
 # geo
 Para testar:
+
     arrancar a aplicação (springboot - autoconfiguravel no intelij)
     utilisar ferramenta para efetuar pedidos(ex postman)
     url de teste: https://localhost:8081/info
