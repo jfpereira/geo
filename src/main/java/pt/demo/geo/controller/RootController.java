@@ -34,7 +34,7 @@ public class RootController {
      * @return {@link ResponseEntity} with Http Status Code 200 (OK) if get result, or Code 400 when not get any result
      */
     @PostMapping("/info")
-    public ResponseEntity<Object> getInfoCountry(@Valid @RequestBody GeoRequest request) {
+    public ResponseEntity<Object> getInfoCountry(@RequestBody GeoRequest request) {
 
         log.info("Get country information - Begin");
         GeoCountry response = geoService.getCountryInfoByCountryCode(request.getCountryName());
